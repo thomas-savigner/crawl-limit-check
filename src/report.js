@@ -1,6 +1,9 @@
 import { GOOGLEBOT_LIMIT, MAX_REDIRECTS, ONE_MIB, WARNING_RATIO } from './config.js';
 import { analyzeHtml } from './html-analyzer.js';
 
+const OFFSET_BAR_WIDTH = 40;
+const OFFSET_LABEL_WIDTH = 15;
+
 /** Formate une quantité d'octets pour rendre le rapport console lisible. */
 function formatBytes(value) {
   return new Intl.NumberFormat('fr-FR').format(value);
@@ -24,6 +27,55 @@ function offsetLabel(offset, headerSize) {
   const absolutePosition = headerSize + offset;
   const visibility = absolutePosition < GOOGLEBOT_LIMIT ? 'avant la limite' : 'hors limite';
   return `${formatBytes(offset)} (${visibility})`;
+}
+
+/**
+ * Construit une jauge CLI représentant la position totale d'un élément SEO
+ * dans le budget Googlebot, en tenant compte de la taille des headers.
+ */
+function buildOffsetBar(offset, headerSize) {
+  if (offset === null) {
+    return `[${'?'.repeat(OFFSET_BAR_WIDTH)}] non trouvé`;
+  }
+
+  const ratio = (headerSize + offset) / GOOGLEBOT_LIMIT;
+  const bar = Array(OFFSET_BAR_WIDTH).fill('─');
+
+  if (ratio >= 1) {
+    // Le chevron placé sur le bord droit montre que l'élément dépasse la jauge.
+    bar[OFFSET_BAR_WIDTH - 1] = '>';
+  } else {
+    const markerIndex = Math.min(
+      OFFSET_BAR_WIDTH - 1,
+      Math.floor(ratio * OFFSET_BAR_WIDTH),
+    );
+    bar[markerIndex] = '●';
+  }
+
+  return `[${bar.join('')}] ${formatPercent(ratio * 100)} %`;
+}
+
+/** Affiche les offsets SEO sous forme de jauges alignées de 0 à 2 Mio. */
+function printOffsetsVisualization(offsets, headerSize) {
+  const rows = [
+    ['<title>', offsets.title],
+    ['canonical', offsets.canonical],
+    ['JSON-LD', offsets.jsonLd],
+    ['<h1>', offsets.h1],
+    ['lien interne', offsets.importantInternalLink],
+  ];
+  const axisSpacing = ' '.repeat(OFFSET_BAR_WIDTH - 8);
+
+  console.log('\nVue visuelle (position headers + body / limite Googlebot) :');
+  console.log(`${' '.repeat(OFFSET_LABEL_WIDTH + 4)}0 %${axisSpacing}100 %`);
+
+  for (const [label, offset] of rows) {
+    console.log(
+      `- ${label.padEnd(OFFSET_LABEL_WIDTH)} ${buildOffsetBar(offset, headerSize)}`,
+    );
+  }
+
+  console.log('  Légende : ● avant la limite | > hors limite | ? non trouvé');
 }
 
 /**
@@ -96,6 +148,7 @@ export function printReport(result) {
       `- premier lien interne important : ` +
         offsetLabel(offsets.importantInternalLink, headerSize),
     );
+    printOffsetsVisualization(offsets, headerSize);
   }
 
   console.log('\nAnalyse :');

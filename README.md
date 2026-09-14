@@ -59,6 +59,22 @@ Les modules n'exportent que les fonctions nécessaires au module suivant. Les
 petites fonctions techniques restent privées dans leur fichier, ce qui limite
 le nombre de concepts à connaître pour comprendre chaque étape.
 
+## Visualisation des offsets
+
+Après les offsets numériques, le rapport affiche une jauge par élément SEO :
+
+```text
+                    0 %                                100 %
+- <title>         [●───────────────────────────────────────] 0,1 %
+- canonical       [────●───────────────────────────────────] 10,4 %
+- JSON-LD         [───────────────────────────────────────>] 101,2 %
+- <h1>            [????????????????????????????????????????] non trouvé
+```
+
+La position combine les headers et l'offset dans le body. `●` signale un
+élément placé avant la limite, `>` un élément au-delà des 2 Mio et `?` un
+élément absent du HTML analysé.
+
 ## Codes de sortie
 
 - `0` : audit terminé sans dépassement ni anomalie majeure ;
