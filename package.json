@@ -1,0 +1,12 @@
+{
+  "name": "googlebot-2mb-audit",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "audit": "node googlebot-audit.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
