@@ -1,5 +1,5 @@
 {
-  "name": "googlebot-2mb-audit",
+  "name": "crawl-limit-check",
   "version": "1.0.0",
   "private": true,
   "type": "module",
