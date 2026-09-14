@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1130" viewBox="0 0 1400 1130" role="img" aria-labelledby="title description">
+  <title id="title">Capture du rapport CLI crawl-limit-check</title>
+  <desc id="description">Terminal sombre présentant un audit dépassant la limite Googlebot de deux mébioctets, avec les offsets SEO et leurs jauges.</desc>
+
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="#010409" flood-opacity="0.45"/>
+    </filter>
+    <style>
+      .terminal-text {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        font-size: 23px;
+        fill: #c9d1d9;
+      }
+      .small { font-size: 20px; }
+      .muted { fill: #8b949e; }
+      .blue { fill: #58a6ff; }
+      .green { fill: #3fb950; }
+      .yellow { fill: #d29922; }
+      .red { fill: #f85149; }
+      .bold { font-weight: 700; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="1130" fill="#f6f8fa"/>
+  <rect x="45" y="35" width="1310" height="1050" rx="18" fill="#0d1117" stroke="#30363d" stroke-width="2" filter="url(#shadow)"/>
+  <path d="M63 35h1274a18 18 0 0 1 18 18v48H45V53a18 18 0 0 1 18-18z" fill="#161b22"/>
+  <line x1="45" y1="101" x2="1355" y2="101" stroke="#30363d" stroke-width="2"/>
+  <circle cx="84" cy="68" r="10" fill="#ff5f56"/>
+  <circle cx="118" cy="68" r="10" fill="#ffbd2e"/>
+  <circle cx="152" cy="68" r="10" fill="#27c93f"/>
+  <text x="700" y="76" text-anchor="middle" class="terminal-text small muted">crawl-limit-check — audit</text>
+
+  <g class="terminal-text">
+    <text x="78" y="145" class="green bold">$</text>
+    <text x="104" y="145">node googlebot-audit.js https://example.com/article</text>
+
+    <text x="78" y="195" class="muted">URL finale :</text>
+    <text x="264" y="195" class="blue">https://example.com/article</text>
+    <text x="78" y="229" class="muted">Statut HTTP :</text>
+    <text x="264" y="229" class="green">200 OK</text>
+    <text x="78" y="263" class="muted">Content-Type :</text>
+    <text x="264" y="263">text/html; charset=utf-8</text>
+    <text x="78" y="297" class="muted">Content-Encoding :</text>
+    <text x="324" y="297">identity</text>
+
+    <text x="78" y="351" class="muted">Taille headers (estimée) :</text>
+    <text x="448" y="351">1 284 octets</text>
+    <text x="78" y="385" class="muted">Taille body :</text>
+    <text x="264" y="385">2 111 120 octets</text>
+    <text x="78" y="419" class="muted">Taille totale :</text>
+    <text x="288" y="419" class="yellow">2 112 404 octets</text>
+    <text x="78" y="453" class="muted">Limite Googlebot :</text>
+    <text x="336" y="453">2 097 152 octets</text>
+    <text x="78" y="487" class="muted">Statut :</text>
+    <text x="190" y="487" class="red bold">DÉPASSÉ</text>
+
+    <text x="78" y="548" class="blue bold">Offsets (dans le body brut, en octets) :</text>
+    <text x="98" y="585">- &lt;title&gt; : 342</text>
+    <text x="98" y="619">- canonical : 1 056</text>
+    <text x="98" y="653">- JSON-LD (schema) : 824 340</text>
+    <text x="98" y="687">- premier &lt;h1&gt; : 1 172 420</text>
+    <text x="98" y="721">- premier lien interne important : <tspan class="red">2 103 519 (hors limite)</tspan></text>
+
+    <text x="78" y="781" class="blue bold">Vue visuelle (headers + body / limite Googlebot) :</text>
+    <text x="382" y="817" class="muted small">0 %                                100 %</text>
+    <text x="98" y="855">- &lt;title&gt;         [<tspan class="green">●</tspan>───────────────────────────────────────] 0,1 %</text>
+    <text x="98" y="889">- canonical       [<tspan class="green">●</tspan>───────────────────────────────────────] 0,1 %</text>
+    <text x="98" y="923">- JSON-LD         [───────────────<tspan class="yellow">●</tspan>────────────────────────] 39,4 %</text>
+    <text x="98" y="957">- &lt;h1&gt;            [──────────────────────<tspan class="yellow">●</tspan>─────────────────] 56,0 %</text>
+    <text x="98" y="991">- lien interne    [───────────────────────────────────────<tspan class="red">&gt;</tspan>] 100,4 %</text>
+
+    <text x="78" y="1048" class="red bold">Risque de troncature : élevé.</text>
+  </g>
+</svg>
